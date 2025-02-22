@@ -153,12 +153,12 @@ export class VanConsumablesFlowCard extends LitElement {
       }
     }
 
-    let gasUnit: string | null = null;
+    let dieselUnit: string | null = null;
     let gasUsage: number | null = null;
     if (hasDiesel) {
       const dieselEntity = this.hass.states[this._config.entities.diesel!];
       const dieselState = Number(dieselEntity.state);
-      gasUnit = dieselEntity.attributes.unit_of_measurement ?? "m³";
+      dieselUnit = dieselEntity.attributes.unit_of_measurement ?? "L";
       if (this.entityInverted("diesel"))
         gasUsage = Math.abs(Math.min(dieselState, 0));
       else gasUsage = Math.max(dieselState, 0);
@@ -385,7 +385,7 @@ export class VanConsumablesFlowCard extends LitElement {
                         ${formatNumber(gasUsage || 0, this.hass.locale, {
                           maximumFractionDigits: 1,
                         })}
-                        ${gasUnit}
+                        ${dieselUnit}
                       </div>
                       <svg width="80" height="30">
                         <path d="M40 -10 v50" id="gas" />
