@@ -132,7 +132,7 @@ export class VanConsumablesFlowCard extends LitElement {
     const hasGrid = entities.grid !== undefined;
 
     const hasBattery = entities.battery !== undefined;
-    const hasGas = entities.gas !== undefined;
+    const hasDiesel = entities.diesel !== undefined;
     const hasWater = entities.water !== undefined;
     const hasSolarProduction = entities.solar !== undefined;
     const hasReturnToGrid =
@@ -155,13 +155,13 @@ export class VanConsumablesFlowCard extends LitElement {
 
     let gasUnit: string | null = null;
     let gasUsage: number | null = null;
-    if (hasGas) {
-      const gasEntity = this.hass.states[this._config.entities.gas!];
-      const gasState = Number(gasEntity.state);
-      gasUnit = gasEntity.attributes.unit_of_measurement ?? "m³";
-      if (this.entityInverted("gas"))
-        gasUsage = Math.abs(Math.min(gasState, 0));
-      else gasUsage = Math.max(gasState, 0);
+    if (hasDiesel) {
+      const dieselEntity = this.hass.states[this._config.entities.diesel!];
+      const dieselState = Number(dieselEntity.state);
+      gasUnit = dieselEntity.attributes.unit_of_measurement ?? "m³";
+      if (this.entityInverted("diesel"))
+        gasUsage = Math.abs(Math.min(dieselState, 0));
+      else gasUsage = Math.max(dieselState, 0);
     }
 
     let waterUnit: string | null = null;
@@ -353,7 +353,7 @@ export class VanConsumablesFlowCard extends LitElement {
     return html`
       <ha-card .header=${this._config.title}>
         <div class="card-content">
-          ${hasSolarProduction || hasGas || hasWater
+          ${hasSolarProduction || hasDiesel || hasWater
             ? html`<div class="row">
                 <div class="spacer"></div>
                 ${hasSolarProduction
@@ -370,10 +370,10 @@ export class VanConsumablesFlowCard extends LitElement {
                         >
                       </div>
                     </div>`
-                  : hasGas || hasWater
+                  : hasDiesel || hasWater
                   ? html`<div class="spacer"></div>`
                   : ""}
-                ${hasGas
+                ${hasDiesel
                   ? html`<div class="circle-container gas">
                       <span class="label"
                         >${this.hass.localize(
@@ -526,7 +526,7 @@ export class VanConsumablesFlowCard extends LitElement {
                   />
                 </svg>
               </div>
-              ${hasGas && hasWater
+              ${hasDiesel && hasWater
                 ? ""
                 : html` <span class="label"
                     >${this.hass.localize(
@@ -535,7 +535,7 @@ export class VanConsumablesFlowCard extends LitElement {
                   >`}
             </div>
           </div>
-          ${hasBattery || (hasWater && hasGas)
+          ${hasBattery || (hasWater && hasDiesel)
             ? html`<div class="row">
                 <div class="spacer"></div>
                 ${hasBattery
@@ -576,7 +576,7 @@ export class VanConsumablesFlowCard extends LitElement {
                       >
                     </div>`
                   : html`<div class="spacer"></div>`}
-                ${hasGas && hasWater
+                ${hasDiesel && hasWater
                   ? html`<div class="circle-container water bottom">
                       <svg width="80" height="30">
                         <path d="M40 40 v-40" id="water" />
@@ -616,7 +616,7 @@ export class VanConsumablesFlowCard extends LitElement {
             ? html`<div
                 class="lines ${classMap({
                   high: hasBattery,
-                  "water-gas": !hasBattery && hasGas && hasWater,
+                  "water-gas": !hasBattery && hasDiesel && hasWater,
                 })}"
               >
                 <svg
@@ -657,7 +657,7 @@ export class VanConsumablesFlowCard extends LitElement {
             ? html`<div
                 class="lines ${classMap({
                   high: hasBattery,
-                  "water-gas": !hasBattery && hasGas && hasWater,
+                  "water-gas": !hasBattery && hasDiesel && hasWater,
                 })}"
               >
                 <svg
@@ -696,7 +696,7 @@ export class VanConsumablesFlowCard extends LitElement {
             ? html`<div
                 class="lines ${classMap({
                   high: hasBattery,
-                  "water-gas": !hasBattery && hasGas && hasWater,
+                  "water-gas": !hasBattery && hasDiesel && hasWater,
                 })}"
               >
                 <svg
@@ -733,7 +733,7 @@ export class VanConsumablesFlowCard extends LitElement {
             ? html`<div
                 class="lines ${classMap({
                   high: hasBattery,
-                  "water-gas": !hasBattery && hasGas && hasWater,
+                  "water-gas": !hasBattery && hasDiesel && hasWater,
                 })}"
               >
                 <svg
@@ -774,7 +774,7 @@ export class VanConsumablesFlowCard extends LitElement {
             ? html`<div
                 class="lines ${classMap({
                   high: hasBattery,
-                  "water-gas": !hasBattery && hasGas && hasWater,
+                  "water-gas": !hasBattery && hasDiesel && hasWater,
                 })}"
               >
                 <svg
@@ -811,7 +811,7 @@ export class VanConsumablesFlowCard extends LitElement {
             ? html`<div
                 class="lines ${classMap({
                   high: hasBattery,
-                  "water-gas": !hasBattery && hasGas && hasWater,
+                  "water-gas": !hasBattery && hasDiesel && hasWater,
                 })}"
               >
                 <svg

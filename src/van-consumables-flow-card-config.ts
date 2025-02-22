@@ -7,7 +7,7 @@ export interface VanConsumablesFlowCardConfig extends LovelaceCardConfig {
     battery_charge?: string;
     grid: string | ComboEntity;
     solar?: string;
-    gas?: string;
+    diesel?: string;
     water?: string;
   };
   dashboard_link?: string;
