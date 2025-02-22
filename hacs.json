@@ -1,5 +1,5 @@
 {
-  "name": "Power Flow Card",
+  "name": "Van Consumables Flow Card",
   "render_readme": true,
   "homeassistant": "2021.8.0"
 }

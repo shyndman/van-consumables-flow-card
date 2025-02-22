@@ -19,7 +19,7 @@ import { formatNumber, HomeAssistant } from "custom-card-helpers";
 import { css, html, LitElement, svg, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { PowerFlowCardConfig } from "./power-flow-card-config.js";
+import { VanConsumablesFlowCardConfig } from "./van-consumables-flow-card-config.js";
 import {
   coerceNumber,
   coerceStringArray,
@@ -35,10 +35,10 @@ const MAX_FLOW_RATE = 6;
 const MIN_FLOW_RATE = 0.75;
 const W_DECIMALS = 1;
 
-@customElement("power-flow-card")
-export class PowerFlowCard extends LitElement {
+@customElement("van-consumables-flow-card")
+export class VanConsumablesFlowCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
-  @state() private _config = {} as PowerFlowCardConfig;
+  @state() private _config = {} as VanConsumablesFlowCardConfig;
 
   @query("#battery-grid-flow") batteryGridFlow?: SVGSVGElement;
   @query("#battery-home-flow") batteryToHomeFlow?: SVGSVGElement;
@@ -47,7 +47,7 @@ export class PowerFlowCard extends LitElement {
   @query("#solar-grid-flow") solarToGridFlow?: SVGSVGElement;
   @query("#solar-home-flow") solarToHomeFlow?: SVGSVGElement;
 
-  setConfig(config: PowerFlowCardConfig): void {
+  setConfig(config: VanConsumablesFlowCardConfig): void {
     if (
       !config.entities ||
       (!config.entities.battery &&
@@ -1117,14 +1117,14 @@ const windowWithCards = window as unknown as Window & {
 };
 windowWithCards.customCards = windowWithCards.customCards || [];
 windowWithCards.customCards.push({
-  type: "power-flow-card",
-  name: "Power Flow Card",
+  type: "van-consumables-flow-card",
+  name: "Van Consumables Flow Card",
   description:
     "A power distribution card inspired by the official Energy Distribution card for Home Assistant",
 });
 
 declare global {
   interface HTMLElementTagNameMap {
-    "power-flow-card": PowerFlowCard;
+    "van-consumables-flow-card": VanConsumablesFlowCard;
   }
 }
